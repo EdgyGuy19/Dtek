@@ -22,3 +22,14 @@ hex2asc:
 
   # You can write your own code for hexasc here
   #
+   
+   hexasc:
+# numbeers under 10 will be negative
+ 	addi	a0,a0,-10   # a0 = a0 - 10
+ 	blt	a0,zero,under    # if a0 < 0, jump to under
+ 	addi	a0,a0,0x41   # a0 = a0 + 0x41
+ 	jr	ra
+
+under:
+	addi	a0,a0,0x3a   # a0 = a0 + 0x30 + 0x0a
+	jr	ra

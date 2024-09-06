@@ -10,15 +10,15 @@
 ###################
 # Macros for RARS #
 ###################
-#.macro	PUSH (%reg)
-#	addi	sp,sp,-4
-#	sw	%reg,0(sp) 
-#.end_macro
+.macro	PUSH (%reg)
+	addi	sp,sp,-4
+	sw	%reg,0(sp) 
+.end_macro
 
-#.macro	POP (%reg)
-#	lw	%reg,0(sp)
-#	addi	sp,sp,4
-#.end_macro
+.macro	POP (%reg)
+	lw	%reg,0(sp)
+	addi	sp,sp,4
+.end_macro
 ###################
 # Macros for DTEK #
 ###################
@@ -26,7 +26,7 @@
 #	addi sp,sp,-4
 #	sw \reg,0(sp) 
 #.endm
-
+#
 #.macro	POP reg
 #	lw	\reg,0(sp)
 #	addi	sp,sp,4
@@ -110,3 +110,43 @@ tiend:	sw	t0,0(a0)	# save updated result
 #########################################################
 # Place for your functions: time2string, hex2asc, delay.#
 #########################################################
+
+hex2asc:
+	li	a0, 4		# test number (from 0 to 15)
+	
+	addi    sp,sp,-4
+	sw      ra,0(sp)
+	
+	jal	hexasc		# call hexasc
+	
+	li	a7, 11	# write a0 to stdout
+	ecall
+
+	lw      ra,0(sp)
+	addi    sp,sp,4
+	jr      ra	
+
+  # You can write your own code for hexasc here
+  #
+   
+hexasc:
+# numbeers under 10 will be negative
+ 	addi	a0,a0,-10   # a0 = a0 - 10
+ 	blt	a0,zero,under    # if a0 < 0, jump to under
+ 	addi	a0,a0,0x41   # a0 = a0 + 0x41
+ 	jr	ra
+
+under:
+	addi	a0,a0,0x3a   # a0 = a0 + 0x30 + 0x0a
+	jr	ra
+	
+delay:
+	jr ra
+
+time2str ing:
+	PUSH ra
+	PUSH s0
+	mv s0, a0
+	
+	
+	jr ra
