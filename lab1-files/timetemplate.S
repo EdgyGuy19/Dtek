@@ -141,12 +141,62 @@ under:
 	jr	ra
 	
 delay:
+	### use ble? or wtf
+
 	jr ra
 
-time2str ing:
-	PUSH ra
+for: #(for int i=0; i < 4711; i = i+1)
+	bge s0, t0, done # i > 4711?
+	add s1, s1, s0 #sum = sum + 1
+	addi s0, s0, 1 # i = i + 1
+	j for #repeat loop
+
+for_done:
+	j delay #for done
+	
+while_done:
+	jr ra #while done
+
+time2string:
+	PUSH ra 
 	PUSH s0
-	mv s0, a0
+	mv s0, a0 #put the pointer to the string in a register
 	
+	#Second number of seconds
+	srli a0,a1,12  #shift bits to the right
+	andi a0,a0, 0xF #remove all unnecesary bits(the ones to the left)
 	
+	jal hexasc #convert to ASCII
+	sb a0, 0(s0) #store converted charecter on the string
+	
+	#First number of seconds
+	srli a0, a1, 8 #Same as above
+	andi a0, a0, 0xF
+	
+	jal hexasc
+	sb a0,1(s0)
+	
+	#:
+	li t0, 0x3A
+	sb t0, 2(s0) #put : in the string
+	
+	#last number of minutes
+	srli a0,a1, 4 #same as above
+	andi a0,a0, 0xF
+	
+	jal hexasc
+	sb a0, 3(s0)
+	
+	#first number of minutes
+	andi a0, a1, 0xF
+	
+	jal hexasc
+	sb a0,4(s0)
+	
+	# null byte
+	li t0,0x00
+	sb t0, 5(s0)
+	
+	POP s0 #restore the string pointer register so it can be displayed
+	POP ra
 	jr ra
