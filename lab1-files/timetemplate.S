@@ -141,13 +141,14 @@ under:
 	jr	ra
 	
 delay:
-	### use ble? or wtf
-
-	jr ra
+	ble a0, zero, while_done #if ms <= 0 exit while loop
+	addi a0, a0, -1 #decrement ms by 1
+	
+	li s0, 0 #add i = 0
+	li t0, 25000 #add constant for comparison
 
 for: #(for int i=0; i < 4711; i = i+1)
-	bge s0, t0, done # i > 4711?
-	add s1, s1, s0 #sum = sum + 1
+	bge s0, t0, for_done # i > 4711?
 	addi s0, s0, 1 # i = i + 1
 	j for #repeat loop
 
