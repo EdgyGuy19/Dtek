@@ -6,6 +6,7 @@
 	.globl hex2asc
 
 hex2asc:
+	andi    a0,a0,0xf   # only the 4 least significant bits are interesting
 	li	a0, 4		# test number (from 0 to 15)
 	
 	addi    sp,sp,-4
