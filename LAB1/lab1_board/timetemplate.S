@@ -128,7 +128,7 @@ delay:
 	addi a0, a0, -1 #decrement ms by 1
 	
 	li s0, 0 #add i = 0
-	li t0, 5000 #add constant for comparison
+	li t0, 1000 #add constant for comparison
 
 for: #(for int i=0; i < 4711; i = i+1)
 	bge s0, t0, for_done # i > 4711?
