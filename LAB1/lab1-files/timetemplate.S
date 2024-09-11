@@ -111,24 +111,6 @@ tiend:	sw	t0,0(a0)	# save updated result
 # Place for your functions: time2string, hex2asc, delay.#
 #########################################################
 
-hex2asc:
-	li	a0, 4		# test number (from 0 to 15)
-	
-	addi    sp,sp,-4
-	sw      ra,0(sp)
-	
-	jal	hexasc		# call hexasc
-	
-	li	a7, 11	# write a0 to stdout
-	ecall
-
-	lw      ra,0(sp)
-	addi    sp,sp,4
-	jr      ra	
-
-  # You can write your own code for hexasc here
-  #
-   
 hexasc:
 # numbeers under 10 will be negative
 	andi    a0,a0,0xf   # only the 4 least significant bits are interesting
