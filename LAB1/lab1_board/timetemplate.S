@@ -127,11 +127,11 @@ delay:
 	ble a0, zero, while_done #if ms <= 0 exit while loop
 	addi a0, a0, -1 #decrement ms by 1
 	
-	li s0, 0 #add i = 0
+	li t0, 0 #add i = 0, fixa s0 register
 	li t0, 1000 #add constant for comparison
 
 for: #(for int i=0; i < 4711; i = i+1)
-	bge s0, t0, for_done # i > 4711?
+	bge s0, t0, for_done # i > x
 	addi s0, s0, 1 # i = i + 1
 	j for #repeat loop
 
@@ -146,14 +146,14 @@ time2string:
 	PUSH s0
 	mv s0, a0 #put the pointer to the string in a register
 	
-	#Second number of seconds
+	#first number of minutes
 	srli a0,a1,12  #shift bits to the right
 	andi a0,a0, 0xF #remove all unnecesary bits(the ones to the left)
 	
 	jal hexasc #convert to ASCII
 	sb a0, 0(s0) #store converted charecter on the string
 	
-	#First number of seconds
+	#second number of minutes
 	srli a0, a1, 8 #Same as above
 	andi a0, a0, 0xF
 	
@@ -164,14 +164,14 @@ time2string:
 	li t0, 0x3A
 	sb t0, 2(s0) #put : in the string
 	
-	#last number of minutes
+	#Second number of seconds
 	srli a0,a1, 4 #same as above
 	andi a0,a0, 0xF
 	
 	jal hexasc
 	sb a0, 3(s0)
 	
-	#first number of minutes
+	#First number of seconds
 	andi a0, a1, 0xF
 	
 	jal hexasc
