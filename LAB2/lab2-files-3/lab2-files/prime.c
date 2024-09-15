@@ -9,7 +9,16 @@
 #include <stdio.h>
 
 int is_prime(int n){
-    return 0;
+  int checker = 1;
+  int i = 2;
+  while (i < n - 1){
+    if (n % i == 0){
+      checker = 0;
+      break;
+    }
+    i++;
+  }
+  return checker;
 }
 int main(void){
   printf("%d\n", is_prime(11));  // 11 is a prime.      Should print 1.

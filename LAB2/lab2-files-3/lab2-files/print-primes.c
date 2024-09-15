@@ -11,6 +11,37 @@
 
 #define COLUMNS 6
 
+int is_prime(int n){
+  int checker = 1;
+  int i = 2;
+  while (i < n - 1){
+    if (n % i == 0){
+      checker = 0;
+      break;
+    }
+    i++;
+  }
+  return checker;
+}
+
+void print_numbers(int n){  
+  int checker = 0;
+  for (int i = 1; i < n; i++){
+    if (is_prime(i) == 1){
+      if (checker < COLUMNS){
+        printf("%10d ", i);
+        checker++;
+      }
+      else{
+        printf("\n");
+        printf("%10d ", i);
+        checker = 1;
+      }
+    }
+  }
+  printf("\n");
+}
+
 void print_primes(int n){
     // Should print out all prime numbers less than 'n'
     // with the following formatting. Note that
@@ -35,11 +66,9 @@ void print_primes(int n){
 int main(int argc, char *argv[]){
     if(argc == 2)
     {
-        print_primes(atoi(argv[1]));
+        print_numbers(atoi(argv[1]));
     }
   else
     printf("Please state an integer number.\n");
   return 0;
 }
-
- 
