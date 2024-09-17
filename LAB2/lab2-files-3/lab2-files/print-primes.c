@@ -11,6 +11,8 @@
 
 #define COLUMNS 6
 
+int check = 0;
+
 int is_prime(int n){
   int checker = 1;
   int i = 2;
@@ -24,20 +26,15 @@ int is_prime(int n){
   return checker;
 }
 
-void print_numbers(int n){  
-  int checker = 0;
-  for (int i = 1; i < n; i++){
-    if (is_prime(i) == 1){
-      if (checker < COLUMNS){
-        printf("%10d ", i);
-        checker++;
-      }
-      else{
-        printf("\n");
-        printf("%10d ", i);
-        checker = 1;
-      }
-    }
+void print_number(int n){
+  if (check < COLUMNS){
+    printf("%10d ", n);
+    check++;
+  }
+  else {
+       printf("\n");
+       printf("%10d ", n);
+       check = 1;
   }
   printf("\n");
 }
@@ -47,17 +44,12 @@ void print_primes(int n){
     // with the following formatting. Note that
     // the number of columns is stated in the define
     // COLUMNS
-    
-    printf("%10d ", n);
-    printf("%10d ", n);
-    printf("%10d ", n);
-    printf("%10d ", n);
-    printf("%10d ", n);
-    printf("%10d ", n);
-    printf("\n");
-    printf("%10d ", n);
-    printf("%10d ", n);
-    printf("\n");
+  int i;
+  for (int i = 2; i < n; i++){
+    if (is_prime(i) == 1){
+      print_number(i);
+    }
+  }
 }
 
 // 'argc' contains the number of program arguments, and
@@ -66,7 +58,7 @@ void print_primes(int n){
 int main(int argc, char *argv[]){
     if(argc == 2)
     {
-        print_numbers(atoi(argv[1]));
+        print_primes(atoi(argv[1]));
     }
   else
     printf("Please state an integer number.\n");
