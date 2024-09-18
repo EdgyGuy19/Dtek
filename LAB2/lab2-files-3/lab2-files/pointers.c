@@ -11,8 +11,8 @@
 
 char* text1 = "This is a string.";
 char* text2 = "Yet another thing.";
-char list1[80];
-char list2[80];
+int list1[20];
+int list2[20];
 int counter = 0;
 
 void printlist(const int* lst){
@@ -24,32 +24,24 @@ void printlist(const int* lst){
   printf("\n");
 }
 
-void work(){
-  const char *ptr_text;
-  char *ptr_list;
-  int *ptr_counter = counter;
-
-  ptr_text = text1;
-  ptr_list = list1;
-
-  copycodes(ptr_text, ptr_list,ptr_counter);
-
-  ptr_text = text2;
-  ptr_list = list2;
-  copycodes(ptr_text,ptr_list,ptr_counter);
-}
-
-void copycodes(char *pointer_txt, char *pointer_list, int *pointer_count){
-  while (pointer_txt != 0){
-    pointer_txt = (int*) pointer_list;
+void copycodes(char *pointer_txt, int *pointer_list, int *pointer_count){
+  while (*pointer_txt != 0){
+    *pointer_list = *pointer_txt;
 
     pointer_txt++;
-    pointer_list + 4;
+    pointer_list++;
 
-    pointer_count++;
-
+    ++*pointer_count;
+  
   }
 }
+
+void work(){
+  copycodes(text1, list1,&counter);
+  copycodes(text2,list2,&counter);
+}
+
+
 
 void endian_proof(const char* c){
   printf("\nEndian experiment: 0x%02x,0x%02x,0x%02x,0x%02x\n", 
